@@ -1,4 +1,5 @@
-﻿using BookingSystem.Application.Features.BookAppointments.Queries.GetWeeklySchedule;
+﻿using BookingSystem.Application.Features.BookAppointments.Commands.BookAppointment;
+using BookingSystem.Application.Features.BookAppointments.Queries.GetWeeklySchedule;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -22,7 +23,27 @@ namespace BookingSystem.Api.Controllers
 
             var response = await Mediator.Send(query);
 
-            return Ok(response.Data.DailySlots);
+            if(!response.Succeeded)
+            {
+                BadRequest(response);
+            }
+
+            return Ok(response);
+        }
+
+        [HttpPost("appointment")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> BookAppointment(BookAppointmentCommand bookAppointmentCommand)
+        {
+            var response = await Mediator.Send(bookAppointmentCommand);
+
+            if (!response.Succeeded)
+            {
+                return BadRequest(Constants.BookAppointment.FailureMessage);
+            }
+
+            return Ok(Constants.BookAppointment.SuccessfulMessage);          
         }
     }
 }

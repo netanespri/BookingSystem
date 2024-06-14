@@ -16,11 +16,6 @@
             Message = message;            
         }
 
-        public Response(bool succeeded, string message = "")
-        {
-            Succeeded = succeeded;
-            Message = message;
-        }
         public bool Succeeded { get; }
         public string Message { get; } = string.Empty;
         public T Data { get; set; }

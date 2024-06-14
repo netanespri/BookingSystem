@@ -3,5 +3,6 @@
     public interface IHttpClientWrapper
     {
         Task<HttpResponseMessage> GetAsync(string requestUrl);
+        Task<HttpResponseMessage> PostAsync<T>(string requestUrl, T request) where T : class;
     }
 }

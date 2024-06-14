@@ -7,19 +7,19 @@ namespace BookingSystem.Application.UnitTests.Fixtures
     {
         private static Fixture _fixture = new Fixture();
 
-        public static WeeklySchedule Get(string weekStartDate, bool enableWeeklyAvailableSlots)
+        public static WeeklySchedule Get(string weekStartDate, bool hasWeeklyAvailableSlots)
         {
             var startDate = DateOnly.Parse(weekStartDate);
             var weeklySchedule = new WeeklySchedule
             {
                 StartDate = startDate,
-                Days = GetDays(startDate, enableWeeklyAvailableSlots)
+                Days = GetDays(startDate, hasWeeklyAvailableSlots)
             };
 
             return weeklySchedule;
         }
 
-        private static IEnumerable<DailySchedule> GetDays(DateOnly startDate, bool enableWeeklyAvailableSlots)
+        private static IEnumerable<DailySchedule> GetDays(DateOnly startDate, bool hasWeeklyAvailableSlots)
         {
             var days = new List<DailySchedule>();
 
@@ -32,12 +32,12 @@ namespace BookingSystem.Application.UnitTests.Fixtures
                     slotDuration: _fixture.Create<TimeSpan>()
                     );
 
-                if (enableWeeklyAvailableSlots && day.Slots.Any())
+                if (hasWeeklyAvailableSlots && day.Slots.Any())
                 {
                     days.Add(day);
                 }                
 
-                UpdateDaySlotAvailability(day, enableWeeklyAvailableSlots);                
+                UpdateDaySlotAvailability(day, hasWeeklyAvailableSlots);                
             }
 
             return days;

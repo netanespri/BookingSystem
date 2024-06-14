@@ -4,11 +4,17 @@ using BookingSystem.Infrastructure.Mappings;
 using BookingSystem.Infrastructure.SlotService.Responses.WeeklyAvailabilityResponse;
 using Microsoft.Extensions.Logging;
 using BookingSystem.Application.Services;
+using BookingSystem.Domain.Appointment;
+using System.Text.Json;
+using BookingSystem.Application.Responses;
 
 namespace BookingSystem.Infrastructure.SlotService
 {
     public class SlotService : IBookingService
     {
+        private const string GetWeeklyAvailabilityUrlPath = "GetWeeklyAvailability/";
+        private const string BookAppointmentUrlPath = "TakeSlot";
+
         private readonly IHttpClientWrapper _httpClientWrapper;
         private readonly ILogger _logger;
 
@@ -18,27 +24,49 @@ namespace BookingSystem.Infrastructure.SlotService
             _logger = logger;
         }
 
-        public async Task<WeeklySchedule> GetWeeklySchedule(DateOnly date)
+        public async Task<Response<WeeklySchedule>> GetWeeklySchedule(DateOnly date)
         {
-            string url = BuildUrl(date);
+            string url = BuildGetWeeklyAvailabilityUrl(date);
 
-            // Call slot service
-            var response = await _httpClientWrapper.GetAsync(url);
-            string content = await response.Content.ReadAsStringAsync();
-            //            
-            var apiResponse = Newtonsoft.Json.JsonConvert.DeserializeObject<WeeklyAvailabilityResponse>(content);
+            var content = await GetHttpResponseContent(url);
+            var apiResponse = JsonSerializer.Deserialize<WeeklyAvailabilityResponse>(content);
 
-            var weeklySchedule = apiResponse.MapToWeeklySchedule(date);
+            _logger.LogDebug($"{nameof(SlotService)} got response.", apiResponse);
 
-            _logger.LogDebug($"{nameof(SlotService)} got response.", response);
+            var weeklySchedule = apiResponse?.MapToWeeklySchedule(date) ?? 
+                                 new WeeklySchedule();          
 
-            return weeklySchedule;
+            return new Response<WeeklySchedule>(weeklySchedule);
+        }        
+
+        public async Task<Response<bool>> BookAppointment(Appointment appointment)
+        {
+            string url = BookAppointmentUrlPath;
+
+            var apiResponse = await _httpClientWrapper.PostAsync(url, appointment);
+
+            _logger.LogDebug($"{nameof(SlotService)} got response.", apiResponse);
+
+            var responseString = await apiResponse.Content.ReadAsStringAsync();
+
+            return new Response<bool>(
+                data: apiResponse.IsSuccessStatusCode,
+                succeeded: apiResponse.IsSuccessStatusCode,
+                message: responseString);
         }
 
-        private static string BuildUrl(DateOnly date)
+        private async Task<string> GetHttpResponseContent(string url)
+        {
+            var response = await _httpClientWrapper.GetAsync(url);
+            string content = await response.Content.ReadAsStringAsync();
+
+            return content;
+        }
+
+        private static string BuildGetWeeklyAvailabilityUrl(DateOnly date)
         {
             var dateStr = date.ToString(@"yyyyMMdd");
-            string url = $"GetWeeklyAvailability/{dateStr}";
+            string url = $"{GetWeeklyAvailabilityUrlPath}{dateStr}";
 
             return url;
         }

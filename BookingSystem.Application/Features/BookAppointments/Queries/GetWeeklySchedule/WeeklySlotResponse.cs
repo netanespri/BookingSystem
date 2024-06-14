@@ -2,9 +2,7 @@
 {
     public class WeeklySlotResponse
     {
-        // Represents the available slots per day
-        // Key: day name
-        // Value: list of slots.
-        public Dictionary<DayOfWeek, IEnumerable<SlotResponse>> DailySlots { get; set; } = new Dictionary<DayOfWeek, IEnumerable<SlotResponse>>();
+        public Guid FacilityId { get; set; }
+        public Dictionary<DayOfWeek, IEnumerable<SlotResponse>> DailyAvailableSlots { get; set; } = new Dictionary<DayOfWeek, IEnumerable<SlotResponse>>();
     }
 }

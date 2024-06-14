@@ -2,6 +2,7 @@
 {
     public class WeeklyAvailabilityResponse
     {
+        public Facility Facility { get; set; }
         public int SlotDurationMinutes { get; set; }
         public DayAvailability? Monday { get; set; }
         public DayAvailability? Tuesday { get; set; }

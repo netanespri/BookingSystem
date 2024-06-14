@@ -3,14 +3,14 @@ using BookingSystem.Domain.Schedule;
 
 namespace BookingSystem.Application.Mappings
 {
-    public static class AvailableSlotsByDayMapping
+    public static class WeeklyScheduleMapping
     {
-        public static WeeklySlotResponse MapToWeeklySlotResponse(
-            this Dictionary<DayOfWeek, IEnumerable<Slot>> availableSlotsByDay)
+        public static WeeklySlotResponse MapToWeeklySlotResponse(this WeeklySchedule weeklySchedule)
         {
             var weeklySlotResponse = new WeeklySlotResponse
             {
-                DailySlots = availableSlotsByDay.ToDictionary(
+                FacilityId = weeklySchedule.FacilityId, 
+                DailyAvailableSlots = weeklySchedule.AvailableSlotsByDay.ToDictionary(
                                         slotPairs => slotPairs.Key,
                                         slotPairs => slotPairs.Value.Select(
                                             slot => new SlotResponse

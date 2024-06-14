@@ -25,7 +25,7 @@ namespace BookingSystem.Api.Middleware
                 response.ContentType = "application/json";
                 response.StatusCode = error switch
                 {
-                    FluentValidation.ValidationException => (int)HttpStatusCode.BadRequest,
+                    FluentValidation.ValidationException  => (int)HttpStatusCode.BadRequest,
                     _ => (int)HttpStatusCode.InternalServerError,// Unhandled error
                 };
 
@@ -42,6 +42,7 @@ namespace BookingSystem.Api.Middleware
                                     : "Server error";
             var responseModel = new Response<string>
             (
+                data: string.Empty,
                 succeeded: false,
                 message: errorMessage
             );

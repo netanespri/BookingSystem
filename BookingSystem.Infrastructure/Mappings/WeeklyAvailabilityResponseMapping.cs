@@ -11,6 +11,7 @@ namespace BookingSystem.Infrastructure.Mappings
         {
             var weeklySchedule = new WeeklySchedule
             {
+                FacilityId = weeklyAvailabilityResponse.Facility.FacilityId,
                 StartDate = weekStartDate,
                 Days = MapToDayAvailabilityList(weeklyAvailabilityResponse, weekStartDate)
             };
