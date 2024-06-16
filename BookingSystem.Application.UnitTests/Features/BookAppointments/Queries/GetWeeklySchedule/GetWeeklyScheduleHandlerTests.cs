@@ -24,7 +24,7 @@ namespace BookingSystem.Application.UnitTests.Features.BookAppointments.Queries.
         }
 
         [Fact]
-        public async Task Given_Correct_Date_Format_And_Available_Slots_When_Requesting_Weekly_Available_Slots_Then_Return_Slots()
+        public async Task When_Requesting_Weekly_Slots_And_Available_Slots_Exists_Then_Return_Slots()
         {
             // Arrange
             var weeklySchedule = WeeklyScheduleFixture.Get(
@@ -58,7 +58,7 @@ namespace BookingSystem.Application.UnitTests.Features.BookAppointments.Queries.
         }
 
         [Fact]
-        public async Task Given_Correct_Date_Format_And_No_Available_Slots_When_Requesting_Weekly_Available_Slots_Then_Return_No_Slots()
+        public async Task When_Requesting_Weekly_Slots_And_No_Available_Slots_Then_Return_No_Slots()
         {
             // Arrange
             var weeklySchedule = WeeklyScheduleFixture.Get(
@@ -90,7 +90,7 @@ namespace BookingSystem.Application.UnitTests.Features.BookAppointments.Queries.
         [InlineData("")]
         [InlineData("asd")]
         [InlineData("2015-05-16T05:50:06.7199222-04:00")]
-        public async Task Given_Incorrect_Date_Format_And_No_Validation_Behaviour_When_Requesting_Weekly_Available_Slots_Then_Throw_FormatException(
+        public async Task When_Requesting_Weekly_Slots_And_Incorrect_Date_Format_Then_Throw_FormatException(
             string weekStartDate)
         {
             // Arrange

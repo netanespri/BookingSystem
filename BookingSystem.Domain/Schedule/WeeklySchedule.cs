@@ -7,7 +7,9 @@
         public IEnumerable<DailySchedule> Days { get; set; } = Enumerable.Empty<DailySchedule>();
 
         public Dictionary<DayOfWeek, IEnumerable<Slot>> AvailableSlotsByDay => 
-            Days.ToDictionary( daySchedule => daySchedule.DayName,
-                                              daySchedule => daySchedule.GetAvailableSlots());
+            Days
+            .Where(daySchedule => daySchedule.AvailableSlots.Any())
+            .ToDictionary(daySchedule => daySchedule.DayName,
+                                              daySchedule => daySchedule.AvailableSlots);
     }
 }

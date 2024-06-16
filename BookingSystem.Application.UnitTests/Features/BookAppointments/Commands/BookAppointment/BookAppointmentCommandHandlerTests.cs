@@ -25,31 +25,30 @@ namespace BookingSystem.Application.UnitTests.Features.BookAppointments.Commands
 
         [Theory]
         [AutoData]
-        public async Task Given_Booking_Service_Can_Schedule_Requested_Slot_When_Booking_Appointment_Then_Appointment_Scheduled(
+        public async Task When_Booking_Appointment_And_Slot_Avaible_Then_Return_Successful_Response(
             BookAppointmentCommand request)
         {
             // Assert
             var bookingServiceCanScheduleSlot = true;
-            var expectedResponse = new Response<bool>(bookingServiceCanScheduleSlot);
-            var expectedAppointment = request.ToAppointment();
+            var expectedSuccessfulResponse = new Response<bool>(bookingServiceCanScheduleSlot);
             _bookingServiceMock.Setup(service => service.BookAppointment(It.IsAny<Appointment>()))
-                               .ReturnsAsync(expectedResponse);
+                               .ReturnsAsync(expectedSuccessfulResponse);
 
             // Act
             var response = await _sut.Handle(request, default);
 
             // Assert
             response.Should().NotBeNull();
-            response.Succeeded.Should().Be(expectedResponse.Succeeded);
-            response.Data.Should().Be(expectedResponse.Data);
-            response.Message.Should().Be(expectedResponse.Message);
+            response.Succeeded.Should().Be(expectedSuccessfulResponse.Succeeded);
+            response.Data.Should().Be(expectedSuccessfulResponse.Data);
+            response.Message.Should().Be(expectedSuccessfulResponse.Message);
             _bookingServiceMock.Verify(b => b.BookAppointment(It.IsAny<Appointment>())
                                             ,Times.Once);
         }
 
         [Theory]
         [AutoData]
-        public async Task Given_Booking_Service_Cannot_Schedule_Requested_Slot_When_Booking_Appointment_Then_Appointment_Not_Scheduled(
+        public async Task When_Booking_Appointment_And_Slot_Not_Available_Then_Return_Failed_Response(
             BookAppointmentCommand request)
         {
             // Assert
@@ -76,7 +75,7 @@ namespace BookingSystem.Application.UnitTests.Features.BookAppointments.Commands
 
         [Theory]
         [AutoData]
-        public async Task Given_Booking_Service_Has_Issues_When_Booking_Appointment_And_Service_Throws_Exception_Then_Exception_Thrown(
+        public async Task When_Booking_Appointment_And_Service_Throws_Exception_Then_Throw_Exception(
             BookAppointmentCommand request)
         {
             // Assert

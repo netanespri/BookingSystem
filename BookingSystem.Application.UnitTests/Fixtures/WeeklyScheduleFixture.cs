@@ -5,6 +5,7 @@ namespace BookingSystem.Application.UnitTests.Fixtures
 {
     public class WeeklyScheduleFixture
     {
+        private const int TotalDays = 7;
         private static Fixture _fixture = new Fixture();
 
         public static WeeklySchedule Get(string weekStartDate, bool hasWeeklyAvailableSlots)
@@ -23,7 +24,7 @@ namespace BookingSystem.Application.UnitTests.Fixtures
         {
             var days = new List<DailySchedule>();
 
-            for(var i = 0; i < 7; i++) 
+            for(var i = 0; i < TotalDays; i++) 
             {
                 var day = new DailySchedule(
                     date: startDate.AddDays(i),
@@ -45,7 +46,7 @@ namespace BookingSystem.Application.UnitTests.Fixtures
 
         private static void UpdateDaySlotAvailability(DailySchedule day, bool enableWeeklyAvailableSlots)
         {
-            var availableSlots = day.GetAvailableSlots();
+            var availableSlots = day.AvailableSlots;
 
             if (!enableWeeklyAvailableSlots)
             {
