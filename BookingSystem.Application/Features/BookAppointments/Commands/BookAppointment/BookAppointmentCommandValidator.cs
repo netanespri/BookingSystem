@@ -7,8 +7,7 @@ namespace BookingSystem.Application.Features.BookAppointments.Commands.BookAppoi
         public BookAppointmentCommandValidator()
         {
             RuleFor(command => command.FacilityId)
-                .NotEmpty().WithMessage("{PropertyName} is required.")
-                .Must(BeValid).WithMessage("{PropertyName} must be valid");
+                .NotEmpty().WithMessage("{PropertyName} is required.");
 
             RuleFor(command => command.Start)
                 .NotEmpty().WithMessage("{PropertyName} is required.");
@@ -28,13 +27,6 @@ namespace BookingSystem.Application.Features.BookAppointments.Commands.BookAppoi
                     RuleFor(command => command.Patient.Phone)
                         .NotEmpty().WithMessage("{PropertyName} is required.");
                 });
-        }
-
-        private bool BeValid(Guid id)
-        {
-            bool isValid = id != Guid.Empty;
-
-            return isValid;
         }
     }
 }

@@ -10,5 +10,12 @@ namespace BookingSystem.Domain.UnitTests.Schedule.TestData
         public IEnumerable<Slot> Appointments { get; set; }
         public IEnumerable<Slot> ExpectedSlots { get; set; }
         public IEnumerable<Slot> ExpectedAvailableSlots => ExpectedSlots.Where(slot => slot.IsAvailable).ToList();
+
+        public static DateOnly CreateDefaultDate()
+        {
+            var date = DateOnly.FromDateTime(DateTime.Now);
+
+            return date;
+        }
     }
 }
