@@ -2,14 +2,15 @@
 * This application provides users with available slots that can be scheduled to arrange private appointments.
 * No data is persisted. A HTTP service is used to retrieve slots and book appointments: https:/ draliatest.azurewebsites.net/api/availability
 * The code repository can be found at: https://github.com/netanespri/BookingSystem
-* Main components are:
-** Swagger as UI interface to check the Booking API.
-** C# Web API that provides two endpoints:
-*** /api/schedule/availability/week/<date>
-**** GET endpoint to retrieve the available time slots in a week.
-**** Date should follow the format: YYYY-MM-DD. For instance, 2024-06-10
-*** /api/schedule/appointment
-**** POST endpoint to book a slot for a specific patient, date, time and facility.
+
+## Main components
+* Swagger as UI interface to check the Booking API.
+* C# Web API that provides two endpoints:
+  * /api/schedule/availability/week/<date>
+    * GET endpoint to retrieve the available time slots in a week.
+    * <date> should follow the format: YYYY-MM-DD. For instance, 2024-06-10
+  * /api/schedule/appointment
+    * POST endpoint to book a slot for a specific patient, date, time and facility.
 
 ## How to run Booking System
 * Build the solution by running the "dotnet build" command at the root directory.
