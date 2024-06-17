@@ -11,13 +11,12 @@
 *** /api/schedule/appointment
 **** POST endpoint to book a slot for a specific patient, date, time and facility.
 
-# How to run Booking System
+## How to run Booking System
 * Build the solution by running the "dotnet build" command at the root directory.
 * Run the solution by executing the "dotnet run" command in the BookingSystem.Api project directory.
 * The API can be tested via Swagger: https://localhost:7109/swagger/index.html
-* To use the system, firstly get the slot availability using a date whose day is Monday. For example:
-** https://localhost:7109/api/Schedule/availability/week/2024-06-10
-*** JSON successful response (not matching up output of above URL): 
+* To use the system, firstly get the slot availability using a date whose day is Monday. For example: https://localhost:7109/api/Schedule/availability/week/2024-06-10
+* JSON successful response (not matching up output of above URL): 
 ```
 {
   "succeeded": true,
@@ -39,9 +38,8 @@
 }   
 ```
 * Secondly, to book an appointment on the week that has been queried, just use the "start" and "end" dates along with the "facilityId" field.
-* Then add any comment and the patient information as it is shown in the following request and JSON body:
-** https://localhost:7109/api/Schedule/appointment
-*** JSON body:
+* Then add any comment and the patient information as it is shown in the following request and JSON body: https://localhost:7109/api/Schedule/appointment
+* JSON body:
 ```
 {
   "facilityId": "90c9f71c-685f-48e7-a6d5-7898775209ce",
@@ -56,7 +54,7 @@
   }
 } 
 ```
-*** Expected successful output: "Appointment has been scheduled successfully"
+* Expected successful output: "Appointment has been scheduled successfully"
 
 ## Technical details
 
