@@ -6,9 +6,9 @@
 ## Main components
 * Swagger as UI interface to check the Booking API.
 * C# Web API that provides two endpoints:
-  * /api/schedule/availability/week/<date>
+  * /api/schedule/availability/week/{date}
     * GET endpoint to retrieve the available time slots in a week.
-    * <date> should follow the format: YYYY-MM-DD. For instance, 2024-06-10
+    * Date should follow the format: YYYY-MM-DD. For instance, 2024-06-10
   * /api/schedule/appointment
     * POST endpoint to book a slot for a specific patient, date, time and facility.
 
